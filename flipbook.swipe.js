@@ -8,7 +8,6 @@ FLIPBOOK.BookSwipe = function(el, wrapper, model, options) {
 
     this.options = options
     this.singlePage = options.singlePageMode
-    console.log(this.singlePage);
     this.pageWidth = this.options.pageWidth
     this.pageHeight = this.options.pageHeight
     this.slides = []
@@ -73,7 +72,6 @@ FLIPBOOK.BookSwipe = function(el, wrapper, model, options) {
 
 
     for (var i = 0; i < 3; i++) {
-      console.log("appending");
         var $slide = jQuery('<div class="flipbook-carousel-slide"><div class="slide-inner"/></div>"').appendTo(this.$scroller)
         this.slides.push($slide)
 
@@ -203,11 +201,9 @@ FLIPBOOK.BookSwipe = function(el, wrapper, model, options) {
         if (self.singlePage) {
 
             if (sliderPage > self.currentSlide){
-                // console.log("Plus right index");
                 self.setRightIndex(self.rightIndex + 1);
             }
             else if (sliderPage < self.currentSlide){
-                // console.log("Minus Right index");
                 self.setRightIndex(self.rightIndex - 1);
               }
 
@@ -258,7 +254,6 @@ FLIPBOOK.BookSwipe.prototype = {
 
         if (!this.enabled)
             return
-        // console.log("goToPage!!!");
         // console.log("    ##### gotopage "+value)
         // debugger
 
@@ -276,7 +271,6 @@ FLIPBOOK.BookSwipe.prototype = {
         this.resetZoom()
 
         if (instant) {
-            // console.log("Moving right index:"+value);
             this.setRightIndex(value)
             this.updateVisiblePages()
             return
@@ -284,21 +278,18 @@ FLIPBOOK.BookSwipe.prototype = {
 
 
         if (this.singlePage) {
-          console.log("In single Page conditional");
             if (this.options.rightToLeft && this.options.oddPages && value < 1)
                 value = 1
 
             if (value > this.rightIndex) {
 
                 this.setSlidePages(this.currentSlide + 1, [value])
-                console.log("Minus right index");
                 this.setRightIndex(value - 1)
                 this.nextPage(instant);
 
             } else if (value < this.rightIndex) {
 
                 this.setSlidePages(this.currentSlide - 1, [value])
-                console.log("Plus right index");
                 this.setRightIndex(value + 1)
                 this.prevPage(instant);
 
@@ -347,7 +338,6 @@ FLIPBOOK.BookSwipe.prototype = {
     },
 
     setRightIndex: function(value) {
-      // console.log("In setRightIndex");
         this.rightIndex = value
 
     },
@@ -361,7 +351,6 @@ FLIPBOOK.BookSwipe.prototype = {
         // console.log("Current:" + this.currentSlide);
         if (this.currentSlide == 2)
             return;
-        // console.log("After guard");
         this.flipping = true;
 
         this.goToSlide(this.currentSlide + 1, instant)
@@ -608,7 +597,6 @@ FLIPBOOK.BookSwipe.prototype = {
         if(this.singlePage){
 
             if(right){
-              // console.log("In Single-Right:"+index);
                 right.load(function() {
 
                     main.setLoadingProgress(1)
@@ -619,7 +607,6 @@ FLIPBOOK.BookSwipe.prototype = {
                 // right.load();
 
             }else if(left){
-                console.log("In Single-Left");
                 left.load()
             }
 
@@ -627,11 +614,9 @@ FLIPBOOK.BookSwipe.prototype = {
 
         }else{
             if (left) {
-                console.log("In multi-left");
                 left.load(function() {
 
                     if (right) {
-                        console.log("In mulit if left && right")
                         right.load(function() {
 
                             main.setLoadingProgress(1)
@@ -642,7 +627,6 @@ FLIPBOOK.BookSwipe.prototype = {
 
                         })
                     } else {
-                      console.log("In left load else")
                         main.setLoadingProgress(1)
                         if (prev) prev.load()
 
@@ -653,7 +637,6 @@ FLIPBOOK.BookSwipe.prototype = {
             } else {
 
                 if (right) {
-                  console.log("In multi-right");
                     right.load(function() {
 
                         main.setLoadingProgress(1)
@@ -669,7 +652,6 @@ FLIPBOOK.BookSwipe.prototype = {
     },
 
     updateVisiblePages: function() {
-      console.log("Updating visible");
         var self = this
         var toLoad
         var main = this.options.main
@@ -933,7 +915,6 @@ FLIPBOOK.BookSwipe.prototype = {
 
 
             if (this.rightIndex % 2 != 0){
-                console.log("Resetting right Index");
                 this.setRightIndex(this.rightIndex + 1);
               }
 
@@ -977,8 +958,6 @@ FLIPBOOK.BookSwipe.prototype = {
 
     goToSlide: function(slide, instant) {
 
-        // console.log("gotoslide "+slide)
-
         var time = instant ? 0 : 300 * this.options.pageFlipDuration
         // var time = instant ? 0 : 500 * this.options.pageFlipDuration
         // time = 10
@@ -1008,7 +987,6 @@ FLIPBOOK.BookSwipe.prototype = {
     },
 
     zoomTo: function(zoom, time, x, y) {
-      // console.log("In Zoom To");
         if (!this.enabled)
             return
 
@@ -1240,7 +1218,6 @@ FLIPBOOK.PageSwipe = function(model, options, index, texture, html) {
 FLIPBOOK.PageSwipe.prototype = {
 
     load: function(callback) {
-        // console.log("In pageswipe load!");
         var index = this.options.rightToLeft ? this.options.numPages - this.index - 1 : this.index
 
         if (this.options.pdfMode) {
@@ -1256,7 +1233,6 @@ FLIPBOOK.PageSwipe.prototype = {
             var size = pageSize < o.pageTextureSizeTreshold ? o.pageTextureSizeSmall : o.pageTextureSize
 
             if (this.size == size) {
-                // console.log("Precallback:"+ index);
                 if (callback) callback.call(this)
                 return
             }
