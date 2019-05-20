@@ -434,7 +434,7 @@ FLIPBOOK.BookSwipe.prototype = {
 
             if (arr.join("") === this.slides[slide].pages.join("")){
                 // console.log(arr)
-                // console.log(this.slides[slide].pages)
+                //console.log(this.slides[slide].pages)
                 return
             }
 
@@ -673,7 +673,7 @@ FLIPBOOK.BookSwipe.prototype = {
                 //cover
                 this.setSlidePages(0, [right])
 
-                if(next)
+                if(next && !self.singlePage)
                     this.setSlidePages(1, [next])
                 else
                     this.clearSlidePages(1)
@@ -689,8 +689,12 @@ FLIPBOOK.BookSwipe.prototype = {
                if(next){
 
                     this.setSlidePages(1, [right])
-                    this.setSlidePages(0, [left])
-                    this.setSlidePages(2, [next])
+
+                    if(!self.singlePage){
+                      this.setSlidePages(0, [left])
+                      this.setSlidePages(2, [next])
+                    }
+
                     this.goToSlide(1,true)
 
                     if(self.singlePage){
@@ -701,7 +705,11 @@ FLIPBOOK.BookSwipe.prototype = {
                }else{
 
                     this.setSlidePages(2, [right])
-                    this.setSlidePages(1, [left])
+
+                    if(!self.singlePage){
+                      this.setSlidePages(1, [left])
+                    }
+
                     this.goToSlide(2,true)
 
                     this.clearSlidePages(0);
